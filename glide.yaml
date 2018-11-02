@@ -1,0 +1,9 @@
+package: alarm-service
+import:
+- package: github.com/bsm/sarama-cluster
+  version: ^2.1.15
+- package: github.com/globalsign/mgo
+- package: github.com/go-ini/ini
+  version: ^1.39.0
+- package: github.com/go-sql-driver/mysql
+  version: ^1.4.0
