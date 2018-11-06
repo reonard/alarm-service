@@ -96,10 +96,12 @@ func (w *Worker) parseAlarmData(monData *MonitorData) {
 				alarmDescList[metricType] = make([]string, 0, 10)
 			}
 
+			fmt.Println(vMetricStatus)
+
 			alarmDescList[metricType] = append(alarmDescList[metricType],
-				fmt.Sprintf("【%s】发生【%s】, 当前值:%v",
+				fmt.Sprintf("【%s】状态【%s】, 当前值:%v",
 					metricDisplayName,
-					StatusCN[vMetricStatus.(int)],
+					StatusCN[int(vMetricStatus.(float64))],
 					monData.Data[0][metricKey]))
 		}
 	}
