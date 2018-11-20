@@ -67,9 +67,10 @@ func (w *Worker) flushData(collection string, data ...interface{}) {
 func (w *Worker) parseAlarmData(monData *MonitorData) {
 
 	rows, err := db.MySqlDB.Query(
-		"SELECT metric_key, metric_status_key, metric_display_name, metric_type from device " +
-			"LEFT JOIN device_model model ON device.device_model = model.name " +
-			"LEFT JOIN metric_config mc ON model.name = mc.device_model ")
+		"SELECT metric_key, metric_status_key, metric_display_name, metric_type from device "+
+			"LEFT JOIN device_model model ON device.device_model = model.name "+
+			"LEFT JOIN metric_config mc ON model.name = mc.device_model "+
+			"WHERE device.device_id = ?", monData.DeviceId)
 
 	if err != nil {
 		fmt.Printf("parseAlarmData Error: %v", err)
