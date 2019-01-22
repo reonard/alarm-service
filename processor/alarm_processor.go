@@ -92,7 +92,7 @@ func (w *Worker) parseAlarmData(monData *MonitorData) {
 			monData.AlarmDescription = nil
 		}
 
-		if vMetricStatus, ok := monData.Data[0][metricStatusKey]; ok && vMetricStatus != STATUS_NORMAL {
+		if vMetricStatus, ok := monData.Data[0][metricStatusKey]; ok && int(vMetricStatus.(float64)) != STATUS_NORMAL {
 
 			InsertAlarmItem(monData, metricKey)
 
