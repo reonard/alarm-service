@@ -21,6 +21,8 @@ func TestNewProcessor(t *testing.T) {
 	m := db.InitMySQLDB(AppCfg.MySqlURL)
 	defer m.Close()
 
+	db.InitCache()
+
 	p := NewProcessor(1, 1)
 	p.Run()
 

@@ -24,7 +24,7 @@ func InitMySQLDB(url string) *sql.DB {
 	return MySqlDB
 }
 
-func ExecuteUpdate(sql string, args ...interface{}) error {
+func ExecuteSQL(sql string, args ...interface{}) error {
 
 	fmt.Println(args)
 

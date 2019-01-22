@@ -28,6 +28,8 @@ func main() {
 	m := db.InitMySQLDB(AppCfg.MySqlURL)
 	defer m.Close()
 
+	db.InitCache()
+
 	signals := make(chan os.Signal, 1)
 	signal.Notify(signals, os.Interrupt)
 

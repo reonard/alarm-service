@@ -3,6 +3,7 @@ package processor
 import (
 	"alarm-service/db"
 	"fmt"
+	"github.com/patrickmn/go-cache"
 	"os"
 	"os/signal"
 	"strconv"
@@ -93,6 +94,8 @@ func (w *Worker) parseAlarmData(monData *MonitorData) {
 
 		if vMetricStatus, ok := monData.Data[0][metricStatusKey]; ok && vMetricStatus != STATUS_NORMAL {
 
+			InsertAlarmItem(monData, metricKey)
+
 			if _, ok := alarmDescList[metricType]; !ok {
 				alarmDescList[metricType] = make([]string, 0, 10)
 			}
@@ -116,6 +119,23 @@ func (w *Worker) parseAlarmData(monData *MonitorData) {
 }
 
 func (w *Worker) saveAlarmData(monData *MonitorData) {
+
+	var deviceInfo DeviceInfo
+	var err error
+
+	deviceCacheInfo, exists := db.InMemoryCache.Get(strconv.Itoa(int(monData.DeviceId)))
+	if !exists {
+		err, deviceInfo = GetDeviceInfo(monData.DeviceId)
+		if err != nil {
+			db.InMemoryCache.Set(strconv.Itoa(int(monData.DeviceId)), deviceInfo, cache.DefaultExpiration)
+		}
+	} else {
+		deviceInfo = deviceCacheInfo.(DeviceInfo)
+	}
+
+	monData.Project = deviceInfo.Project
+	monData.Customer = deviceInfo.Customer
+
 	w.flushData("alarm_data", monData)
 }
 
