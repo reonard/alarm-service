@@ -4,8 +4,7 @@ type MonitorData struct {
 	DeviceId          int64                    `json:"ID"`
 	DeviceStatus      int8                     `json:"status"`
 	TimeStamp         string                   `json:"once"`
-	Customer          string                   `json:"Customer"`
-	Project           string                   `json:"Project"`
+	Project           int64                    `json:"Project"`
 	Data              []map[string]interface{} `json:"ProbeData"`
 	AlarmHandleStatus int8                     `json:"AlarmHandleStatus"`
 	AlarmHandle       string                   `json:"AlarmHandle"`
@@ -15,6 +14,5 @@ type MonitorData struct {
 type DeviceInfo struct {
 	DeviceId   int64
 	DeviceName string
-	Customer   string
-	Project    string
+	Project    int64
 }
